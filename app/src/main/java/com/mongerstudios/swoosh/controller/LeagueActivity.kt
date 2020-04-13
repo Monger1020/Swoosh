@@ -4,12 +4,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import com.mongerstudios.swoosh.utilities.EXTRA_LEAGUE
 import com.mongerstudios.swoosh.R
+import com.mongerstudios.swoosh.controller.Model.Player
+import com.mongerstudios.swoosh.utilities.EXTRA_PLAYER
 import kotlinx.android.synthetic.main.activity_league.*
 
 class LeagueActivity : BaseActivity() {
-    var selectedLeague = ""
+    //var selectedLeague = ""
+    var player = Player("","")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,9 +20,9 @@ class LeagueActivity : BaseActivity() {
 
     fun LeagueNextClicked(view: View){
         //transition to Next View
-        if (selectedLeague != "") {
+        if(player.league != ""){
             val skillActivity = Intent(this, SkillActivity::class.java)
-            skillActivity.putExtra(EXTRA_LEAGUE,selectedLeague)
+            skillActivity.putExtra(EXTRA_PLAYER, player)
             startActivity(skillActivity)
         }else{
             Toast.makeText(this,"Select a League first",Toast.LENGTH_SHORT).show()
@@ -29,23 +31,20 @@ class LeagueActivity : BaseActivity() {
 
     //Togle button logic functions
     fun OnMensClicked(view: View){
-        //btnMens.isChecked = true
         btnWomens.isChecked = false
         btnCoed.isChecked = false
-        selectedLeague = "Mens"
+        player.league = "Mens"
     }
 
     fun OnWomensClicked(view:View){
         btnMens.isChecked = false
-        //btnWomens.isChecked = true
         btnCoed.isChecked = false
-        selectedLeague = "Womens"
+        player.league = "Womens"
     }
 
     fun OnCoedClicked(view: View){
         btnMens.isChecked = false
         btnWomens.isChecked = false
-        //btnCoed.isChecked = true
-        selectedLeague = "Co-Ed"
+        player.league = "Co-Ed"
     }
 }
